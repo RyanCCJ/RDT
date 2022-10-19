@@ -1,0 +1,7 @@
+# Figure 2-B
+
+TOOL: [1]
+ANALYZE_GROUP: [1]
+ANALYZE_TYPE: [RNAUP]
+RNAUP_FILE: [AGO3]
+READ_COUNT_TYPE: [no_need_rc]
