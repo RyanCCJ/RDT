@@ -2,17 +2,17 @@
 
 TATK is a toolkit to analyze transcriptome and plot result into multiple ways include: 
 
-- Read counts or binding sites distribution in  three region such as 5'UTR, CDS, 3'UTR.
-<img src="examples/fig/3-B.png" width=300 />
+> - Read counts or binding sites distribution in  three region such as 5'UTR, CDS, 3'UTR.
+> <img src="examples/fig/3-B.png" width=300 />
 
-- Read counts or binding sites distribution near Start or Stop codons.
-<img src="examples/fig/2-C.png" width=500 />
+> - Read counts or binding sites distribution near Start or Stop codons.
+> <img src="examples/fig/2-C.png" width=500 />
 
-- Metagene distribution with customized numbers of bin. 
-<img src="examples/fig/5-E-1.png" width=300 />
+> - Metagene distribution with customized numbers of bin. 
+> <img src="examples/fig/5-E-1.png" width=300 />
 
-- Fold-change between wild-type and mutant RNAs.
-<img src="examples/fig/4-B-1.png" width=300 />
+> - Fold-change between wild-type and mutant RNAs.
+> <img src="examples/fig/4-B-1.png" width=300 />
 
 For more information, please check original paper ["Transcriptome-wide analysis suggests piRNAs preferentially recognize the coding region of mRNAs in C. elegans, Wei-Sheng Wu, Jordan S. Brown, bioRxiv, 2022"](https://www.biorxiv.org/content/10.1101/2022.06.08.495319v1)
 
