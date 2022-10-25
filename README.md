@@ -1,4 +1,4 @@
-# Transcriptome Analysis Toolkit (TATK)
+# TATK - Transcriptome Analysis Toolkit
 
 TATK is a toolkit to analyze transcriptome and plot result into multiple ways include: 
 
@@ -8,7 +8,7 @@ TATK is a toolkit to analyze transcriptome and plot result into multiple ways in
 > - Read counts or binding sites distribution near Start or Stop codons.
 > <img src="examples/fig/2-C.png" width=500 />
 
-> - Metagene distribution with customized numbers of bin. 
+> - Metagene distribution with customized datasets. 
 > <img src="examples/fig/5-E-1.png" width=300 />
 
 > - Fold-change between wild-type and mutant RNAs.
