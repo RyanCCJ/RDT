@@ -1,7 +1,0 @@
-# Figure 4-A-2
-
-TOOL: [1]
-ANALYZE_GROUP: [2]
-ANALYZE_TYPE: [G22]
-G22_FILE: [WT_WAGOIP]
-READ_COUNT_TYPE: [need_rc]

@@ -1,7 +1,0 @@
-# Figure 3-A
-
-TOOL: [2]
-ANALYZE_GROUP: [5]
-ANALYZE_TYPE: [PIRSCAN]
-PIR_FILE: [stringent]
-READ_COUNT_TYPE: [no_need_rc]

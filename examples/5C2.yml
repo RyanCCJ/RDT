@@ -1,7 +1,0 @@
-# Figure 5-C-2
-
-TOOL: [2]
-ANALYZE_GROUP: [22]
-ANALYZE_TYPE: [G22]
-G22_FILE: [Nat_WT1_CSR1IP]
-READ_COUNT_TYPE: [need_rc]
