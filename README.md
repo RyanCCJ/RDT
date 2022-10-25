@@ -36,7 +36,10 @@ $ python plot.py 4A1
 ### Requirements
 - Python >= 3.6
 - numpy >= 1.12.1
-- seaborn >= 0.9,<0.12
+- seaborn >= 0.9
 - matplotlib >= 2.2.2
 - pandas >= 0.23.0
 - scipy >= 1.1.0
+- python-pptx = 0.6
+- PyYAML = 6.0
+- statannot = 0.2.3
