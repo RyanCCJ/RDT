@@ -1,0 +1,61 @@
+#============================================
+# choose tool (1-4):
+TOOL: []
+
+# tool 1 = density analysis
+LEN_FILTER: [1]
+
+# tool 2 = metagene analysis
+PERCENT: [100]
+
+# tool 3 = codon analysis
+EXTEND_RANGE: [100]
+
+# tool 4 = fold change analysis
+FOLD_LEN_FILTER: [1]
+
+#============================================
+# number of transcript list (1-2):
+LIST: 1
+
+# single transcript list:
+ANALYZE_GROUP: []
+
+# compare two transcript list:
+GENE_LIST1: []
+GENE_LIST2: []
+
+#============================================
+# number of gene dataset (1-2):
+DATA: 1
+
+# compare two dataset:
+# (Note!) only include TARGET_SCORE_FILE and G22_FILE
+COMPARE_DATA1: []
+COMPARE_DATA2: []
+
+#============================================
+# choose analysis type:
+# TARGET_SCORE (CLASH site with targeting score, in tool 1~4)
+# RNAUP (CLASH site with RNAup, in tool 1~3)
+# PIRSCAN (predicted site with pirScan, in tool 1~3)
+# G22 (predicted 22G site with Bowtie, in tool 1~4)
+ANALYZE_TYPE: []
+
+TARGET_SCORE_FILE: []
+
+PIR_FILE: []
+
+RNAUP_FILE: []
+
+G22_FILE: []
+
+#============================================
+# determin the name of specific RNA in figure
+title_map_rna: []
+
+#============================================
+# choose read-count level or site level
+READ_COUNT_TYPE: []
+
+#============================================
