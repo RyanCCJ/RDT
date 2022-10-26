@@ -18,22 +18,10 @@ For more information, please check original paper ["Transcriptome-wide analysis 
 
 ## Documentation
 
-### General Usage
-First, entering `bioinfo/piRNA_project/code/config/` and revising the configure files. 
-Second, entering `bioinfo/piRNA_project/code/` and simply excuting 'run.py' as below:
-```
-$ python run.py
-```
-Figures will appear into `static/paper/'.
+Please check wiki.
 
-### Examples
-Some configure of figures in the paper can be found in `examples/`.
-To test them, simply excute the program 'plot.py' with the figure index as below:
-```
-$ python plot.py 4A1
-```
 
-### Requirements
+## Requirements
 - Python >= 3.6
 - numpy >= 1.12.1
 - seaborn >= 0.9
