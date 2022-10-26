@@ -2,7 +2,7 @@
 
 TATK is a toolkit to analyze transcriptome and plot result into multiple ways include: 
 
-> - Read counts or binding sites distribution in  three region such as 5'UTR, CDS, 3'UTR.
+> - Read counts or binding sites distribution in  three region (5'UTR, CDS, 3'UTR).
 > <img src="examples/fig/3-B.png" width=300 />
 
 > - Read counts or binding sites distribution near Start or Stop codons.
