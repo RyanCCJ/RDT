@@ -31,7 +31,7 @@ def tool1_4(data):
                             gene_name = check_new(data, gene)
                             utr5_density1, cds_density1, utr3_density1 = main_filter_mRNA(FILE_NAME1, rc, gene_path, gene, gene_name, FILTER)
                             utr5_density2, cds_density2, utr3_density2 = main_filter_mRNA(FILE_NAME2, rc, gene_path, gene, gene_name, FILTER)
-                            main_plot(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME1, title_map_rna[FILE_NAME1], FILE_NAME2, title_map_rna[FILE_NAME2], gene, title_map_gene[gene], rc, FILTER)
+                            main_plot(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME1, title_map_rna[FILE_NAME1], FILE_NAME2, title_map_rna[FILE_NAME2], gene, title_map_gene[gene], rc, FILTER, data['img_title'])
                             
                             #two_set_group_dict.setdefault(str(gene)+'_'+FILE_NAME1, [utr5_density1, cds_density1, utr3_density1])
                             #two_set_group_dict.setdefault(str(gene)+'_'+FILE_NAME2, [utr5_density2, cds_density2, utr3_density2])
@@ -156,215 +156,26 @@ def main_filter_mRNA(FILE_NAME, rc, gene_path, gene, title_map_gene, FILTER):
     return utr5_density, cds_density, utr3_density
 
 def single_plot_method1(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, all_utr32,FILE_NAME1, title_map_rna1, FILE_NAME2, title_map_rna2, gene, title_map_gene,
-                        rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2):
+                        rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, img_title):
     #res_path = os.path.abspath(__file__+ '/../../../usetRNA_target_score_'+need_rc+'_output/density_fig/COMPARE_'+FILE_NAME1+'_'+FILE_NAME2+'G'+str(gene)+'_L'+str(FILTER)+'.png')
     res_path = os.path.abspath(__file__+ '/../../../../../static/paper/density_fig/compare/density_COMPARE_'+FILE_NAME1+'_'+FILE_NAME2+'_G'+str(gene)+'_L'+str(FILTER)+rc+'.png')
     
     print('ploting group:',FILE_NAME1,FILE_NAME2,rc,FILTER,str(gene))
-    
-    #### Log ####
-    # U-test
-    fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
 
-    ax1.set_title(title_map_gene+'_UTR5\n'+title_map_rna1+' N='+str(len(all_utr5))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr52))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    ax1.tick_params(axis='y', labelsize=16)
-    
-    mean_5 = round(np.mean(all_utr5),3)
-    median_5 = round(np.median(all_utr5),3)
-    UTR5 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_5, median_5)
-    mean_52 = round(np.mean(all_utr52),3)
-    median_52 = round(np.median(all_utr52),3)
-    UTR52 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_52, median_52)
-    
-    mean_cds = round(np.mean(all_cds),3)
-    median_cds = round(np.median(all_cds),3)
-    CDS = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_cds, median_cds)
-    mean_cds2 = round(np.mean(all_cds2),3)
-    median_cds2 = round(np.median(all_cds2),3)
-    CDS2 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_cds2, median_cds2)
-    
-    mean_3 = round(np.mean(all_utr3),3)
-    median_3 = round(np.median(all_utr3),3)
-    UTR3 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_3, median_3)
-    mean_32 = round(np.mean(all_utr32),3)
-    median_32 = round(np.median(all_utr32),3)
-    UTR32 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_32, median_32)
-    utr5_75 = np.percentile(all_utr5, 75)
-    utr5_25 = np.percentile(all_utr5, 25)
-    utr5_max = utr5_25 + 1.6*(utr5_75 - utr5_25)
-    utr5_75 = np.percentile(all_utr52, 75)
-    utr5_25 = np.percentile(all_utr52, 25)
-    utr52_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
-    
-    cds_75 = np.percentile(all_cds, 75)
-    cds_25 = np.percentile(all_cds, 25)
-    cds_max = cds_75 + 1.6*(cds_75 - cds_25)
-    cds_75 = np.percentile(all_cds2, 75)
-    cds_25 = np.percentile(all_cds2, 25)
-    cds2_max = cds_75 + 1.6*(cds_75 - cds_25)
-    
-    utr3_75 = np.percentile(all_utr3, 75)
-    utr3_25 = np.percentile(all_utr3, 25)
-    utr3_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    utr3_75 = np.percentile(all_utr32, 75)
-    utr3_25 = np.percentile(all_utr32, 25)
-    utr32_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    
-    plt.ylim(0, max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
-    tmp2 = pd.DataFrame({UTR5:pd.Series(all_utr5),UTR52:pd.Series(all_utr52)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax1)
-    add_stat_annotation(ax1,data=tmp2,
-                    box_pairs=[(UTR5, UTR52)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
-    if rc == 'need_rc':
-        ax1.set_ylabel('log10(Normalized read counts*M/nt)',fontsize=22) #log10(read counts*M/nt)
-    else:
-        ax1.set_ylabel('log10(sites counts*M/nt)',fontsize=22)
-
-    ax2.set_title(title_map_gene+'_CDS\n'+title_map_rna1+' N='+str(len(all_cds))+'\n'+
-                 title_map_rna2+' N='+str(len(all_cds2))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({CDS:pd.Series(all_cds),CDS2:pd.Series(all_cds2)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax2)    
-    add_stat_annotation(ax2,data=tmp2,
-                    box_pairs=[(CDS, CDS2)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
-    
-    ax3.set_title(title_map_gene+'_UTR3\n'+title_map_rna1+' N='+str(len(all_utr3))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr32))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({UTR3:pd.Series(all_utr3),UTR32:pd.Series(all_utr32)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax3)   
-    add_stat_annotation(ax3,data=tmp2,
-                    box_pairs=[(UTR3, UTR32)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
-    tmp2 = pd.DataFrame({title_map_rna1+' UTR5':pd.Series(all_utr5),title_map_rna2+' UTR5':pd.Series(all_utr52),
-                         title_map_rna1+' CDS':pd.Series(all_cds),title_map_rna2+' CDS':pd.Series(all_cds2),
-                         title_map_rna1+' UTR3':pd.Series(all_utr3),title_map_rna2+' UTR3':pd.Series(all_utr32)})
-    #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
-    plt.tight_layout()
-    plt.savefig(res_path.replace('.png', '_log_U.png'))
-    plt.clf()
-    plt.close()
-    del tmp2
-    gc.collect()
-    
-    # T-test
-    fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
-
-    ax1.set_title(title_map_gene+'_UTR5\n'+title_map_rna1+' N='+str(len(all_utr5))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr52))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    ax1.tick_params(axis='y', labelsize=16)
-    
-    mean_5 = round(np.mean(all_utr5),3)
-    median_5 = round(np.median(all_utr5),3)
-    UTR5 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_5, median_5)
-    mean_52 = round(np.mean(all_utr52),3)
-    median_52 = round(np.median(all_utr52),3)
-    UTR52 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_52, median_52)
-    
-    mean_cds = round(np.mean(all_cds),3)
-    median_cds = round(np.median(all_cds),3)
-    CDS = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_cds, median_cds)
-    mean_cds2 = round(np.mean(all_cds2),3)
-    median_cds2 = round(np.median(all_cds2),3)
-    CDS2 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_cds2, median_cds2)
-    
-    mean_3 = round(np.mean(all_utr3),3)
-    median_3 = round(np.median(all_utr3),3)
-    UTR3 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_3, median_3)
-    mean_32 = round(np.mean(all_utr32),3)
-    median_32 = round(np.median(all_utr32),3)
-    UTR32 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_32, median_32)
-    utr5_75 = np.percentile(all_utr5, 75)
-    utr5_25 = np.percentile(all_utr5, 25)
-    utr5_max = utr5_25 + 1.6*(utr5_75 - utr5_25)
-    utr5_75 = np.percentile(all_utr52, 75)
-    utr5_25 = np.percentile(all_utr52, 25)
-    utr52_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
-    
-    cds_75 = np.percentile(all_cds, 75)
-    cds_25 = np.percentile(all_cds, 25)
-    cds_max = cds_75 + 1.6*(cds_75 - cds_25)
-    cds_75 = np.percentile(all_cds2, 75)
-    cds_25 = np.percentile(all_cds2, 25)
-    cds2_max = cds_75 + 1.6*(cds_75 - cds_25)
-    
-    utr3_75 = np.percentile(all_utr3, 75)
-    utr3_25 = np.percentile(all_utr3, 25)
-    utr3_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    utr3_75 = np.percentile(all_utr32, 75)
-    utr3_25 = np.percentile(all_utr32, 25)
-    utr32_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    
-    plt.ylim(0, max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
-    tmp2 = pd.DataFrame({UTR5:pd.Series(all_utr5),UTR52:pd.Series(all_utr52)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax1)
-    add_stat_annotation(ax1,data=tmp2,
-                    box_pairs=[(UTR5, UTR52)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    if rc == 'need_rc':
-        ax1.set_ylabel('log10(Normalized read counts*M/nt)',fontsize=22) #log10(read counts*M/nt)
-    else:
-        ax1.set_ylabel('log10(sites counts*M/nt)',fontsize=22)
-
-    ax2.set_title(title_map_gene+'_CDS\n'+title_map_rna1+' N='+str(len(all_cds))+'\n'+
-                 title_map_rna2+' N='+str(len(all_cds2))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({CDS:pd.Series(all_cds),CDS2:pd.Series(all_cds2)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax2)    
-    add_stat_annotation(ax2,data=tmp2,
-                    box_pairs=[(CDS, CDS2)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    
-    ax3.set_title(title_map_gene+'_UTR3\n'+title_map_rna1+' N='+str(len(all_utr3))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr32))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({UTR3:pd.Series(all_utr3),UTR32:pd.Series(all_utr32)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax3)   
-    add_stat_annotation(ax3,data=tmp2,
-                    box_pairs=[(UTR3, UTR32)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    tmp2 = pd.DataFrame({title_map_rna1+' UTR5':pd.Series(all_utr5),title_map_rna2+' UTR5':pd.Series(all_utr52),
-                         title_map_rna1+' CDS':pd.Series(all_cds),title_map_rna2+' CDS':pd.Series(all_cds2),
-                         title_map_rna1+' UTR3':pd.Series(all_utr3),title_map_rna2+' UTR3':pd.Series(all_utr32)})
-    #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
-    plt.tight_layout()
-    plt.savefig(res_path.replace('.png', '_log_T.png'))
-    plt.clf()
-    plt.close()
-    del tmp2
-    gc.collect()
-    
     #### non-Log ####
     # U-test
+    
     fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
 
-    ax1.set_title(title_map_gene+'_UTR5\n'+title_map_rna1+' N='+str(len(all_utr5))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr52))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     ax1.tick_params(axis='y', labelsize=16)
     
-    mean_5 = round(np.mean(utr5_density1*1000000),3)
-    median_5 = round(np.median(utr5_density1*1000000),3)
-    UTR5 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_5, median_5)
-    mean_52 = round(np.mean(utr5_density2*1000000),3)
-    median_52 = round(np.median(utr5_density2*1000000),3)
-    UTR52 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_52, median_52)
-    
-    mean_cds = round(np.mean(cds_density1*1000000),3)
-    median_cds = round(np.median(cds_density1*1000000),3)
-    CDS = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_cds, median_cds)
-    mean_cds2 = round(np.mean(cds_density2*1000000),3)
-    median_cds2 = round(np.median(cds_density2*1000000),3)
-    CDS2 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_cds2, median_cds2)
-    
-    mean_3 = round(np.mean(utr3_density1*1000000),3)
-    median_3 = round(np.median(utr3_density1*1000000),3)
-    UTR3 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_3, median_3)
-    mean_32 = round(np.mean(utr3_density2*1000000),3)
-    median_32 = round(np.median(utr3_density2*1000000),3)
-    UTR32 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_32, median_32)
+    UTR5 = title_map_rna1
+    UTR52 = title_map_rna2
+    CDS = title_map_rna1
+    CDS2 = title_map_rna2
+    UTR3 = title_map_rna1
+    UTR32 = title_map_rna2
+
     utr5_75 = np.percentile(utr5_density1, 75)
     utr5_25 = np.percentile(utr5_density1, 25)
     utr5_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
@@ -386,135 +197,45 @@ def single_plot_method1(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, all_ut
     utr3_25 = np.percentile(utr3_density2, 25)
     utr32_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
     
-    plt.ylim(0, 1000000*max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
-    tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density1*1000000),UTR52:pd.Series(utr5_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax1)
+    plt.ylim(0, 1000*max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
+    tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density1*1000),UTR52:pd.Series(utr5_density2*1000)})
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm", ax=ax1)
     #ax = sns.violinplot(data=tmp2, scale="count", split=True, inner="quartile", palette="coolwarm")
     add_stat_annotation(ax1,data=tmp2,
                     box_pairs=[(UTR5, UTR52)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0, fontsize=14)
     if rc == 'need_rc':
-        ax1.set_ylabel('Normalized read counts*M/nt',fontsize=22) #log10(read counts*M/nt)
+        ax1.set_ylabel('reads x $\mathregular{10^3}$ / nt',fontsize=22) #log10(read counts*M/nt)
     else:
-        ax1.set_ylabel('sites counts*M/nt',fontsize=22)
+        ax1.set_ylabel('sites x $\mathregular{10^3}$ / nt',fontsize=22)
 
-    ax2.set_title(title_map_gene+'_CDS\n'+title_map_rna1+' N='+str(len(all_cds))+'\n'+
-                 title_map_rna2+' N='+str(len(all_cds2))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     
-    tmp2 = pd.DataFrame({CDS:pd.Series(cds_density1*1000000),CDS2:pd.Series(cds_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax2)    
+    tmp2 = pd.DataFrame({CDS:pd.Series(cds_density1*1000),CDS2:pd.Series(cds_density2*1000)})
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm", ax=ax2)    
     add_stat_annotation(ax2,data=tmp2,
                     box_pairs=[(CDS, CDS2)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0, fontsize=14)
     
-    ax3.set_title(title_map_gene+'_UTR3\n'+title_map_rna1+' N='+str(len(all_utr3))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr32))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     
-    tmp2 = pd.DataFrame({UTR3:pd.Series(utr3_density1*1000000),UTR32:pd.Series(utr3_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax3)   
+    tmp2 = pd.DataFrame({UTR3:pd.Series(utr3_density1*1000),UTR32:pd.Series(utr3_density2*1000)})
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm", ax=ax3)   
     add_stat_annotation(ax3,data=tmp2,
                     box_pairs=[(UTR3, UTR32)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0, fontsize=14)
     tmp2 = pd.DataFrame({title_map_rna1+' UTR5':pd.Series(all_utr5),title_map_rna2+' UTR5':pd.Series(all_utr52),
                          title_map_rna1+' CDS':pd.Series(all_cds),title_map_rna2+' CDS':pd.Series(all_cds2),
                          title_map_rna1+' UTR3':pd.Series(all_utr3),title_map_rna2+' UTR3':pd.Series(all_utr32)})
     #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
+    ax2.set_title(img_title+'\n\n', fontsize=25)
     plt.tight_layout()
     plt.savefig(res_path.replace('.png', '_non-log_U.png'))
     plt.clf()
     plt.close()
     del tmp2
     gc.collect()
-    
-    # T-test
-    fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
 
-    ax1.set_title(title_map_gene+'_UTR5\n'+title_map_rna1+' N='+str(len(all_utr5))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr52))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    ax1.tick_params(axis='y', labelsize=16)
-    
-    mean_5 = round(np.mean(utr5_density1*1000000),3)
-    median_5 = round(np.median(utr5_density1*1000000),3)
-    UTR5 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_5, median_5)
-    mean_52 = round(np.mean(utr5_density2*1000000),3)
-    median_52 = round(np.median(utr5_density2*1000000),3)
-    UTR52 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_52, median_52)
-    
-    mean_cds = round(np.mean(cds_density1*1000000),3)
-    median_cds = round(np.median(cds_density1*1000000),3)
-    CDS = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_cds, median_cds)
-    mean_cds2 = round(np.mean(cds_density2*1000000),3)
-    median_cds2 = round(np.median(cds_density2*1000000),3)
-    CDS2 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_cds2, median_cds2)
-    
-    mean_3 = round(np.mean(utr3_density1*1000000),3)
-    median_3 = round(np.median(utr3_density1*1000000),3)
-    UTR3 = '{}\navg:{}\nmedian:{}'.format(title_map_rna1, mean_3, median_3)
-    mean_32 = round(np.mean(utr3_density2*1000000),3)
-    median_32 = round(np.median(utr3_density2*1000000),3)
-    UTR32 = '{}\navg:{}\nmedian:{}'.format(title_map_rna2, mean_32, median_32)
-    utr5_75 = np.percentile(utr5_density1, 75)
-    utr5_25 = np.percentile(utr5_density1, 25)
-    utr5_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
-    utr5_75 = np.percentile(utr5_density2, 75)
-    utr5_25 = np.percentile(utr5_density2, 25)
-    utr52_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
-    
-    cds_75 = np.percentile(cds_density1, 75)
-    cds_25 = np.percentile(cds_density1, 25)
-    cds_max = cds_75 + 1.6*(cds_75 - cds_25)
-    cds_75 = np.percentile(cds_density2, 75)
-    cds_25 = np.percentile(cds_density2, 25)
-    cds2_max = cds_75 + 1.6*(cds_75 - cds_25)
-    
-    utr3_75 = np.percentile(utr3_density1, 75)
-    utr3_25 = np.percentile(utr3_density1, 25)
-    utr3_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    utr3_75 = np.percentile(utr3_density2, 75)
-    utr3_25 = np.percentile(utr3_density2, 25)
-    utr32_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    
-    plt.ylim(0, 1000000*max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
-    tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density1*1000000),UTR52:pd.Series(utr5_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax1)
-    #ax = sns.violinplot(data=tmp2, scale="count", split=True, inner="quartile", palette="coolwarm")
-    add_stat_annotation(ax1,data=tmp2,
-                    box_pairs=[(UTR5, UTR52)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    if rc == 'need_rc':
-        ax1.set_ylabel('Normalized read counts*M/nt',fontsize=22) #log10(read counts*M/nt)
-    else:
-        ax1.set_ylabel('sites counts*M/nt',fontsize=22)
 
-    ax2.set_title(title_map_gene+'_CDS\n'+title_map_rna1+' N='+str(len(all_cds))+'\n'+
-                 title_map_rna2+' N='+str(len(all_cds2))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({CDS:pd.Series(cds_density1*1000000),CDS2:pd.Series(cds_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax2)    
-    add_stat_annotation(ax2,data=tmp2,
-                    box_pairs=[(CDS, CDS2)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    
-    ax3.set_title(title_map_gene+'_UTR3\n'+title_map_rna1+' N='+str(len(all_utr3))+'\n'+
-                 title_map_rna2+' N='+str(len(all_utr32))+'\n\n\n')#+title_map_gene+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
-    
-    tmp2 = pd.DataFrame({UTR3:pd.Series(utr3_density1*1000000),UTR32:pd.Series(utr3_density2*1000000)})
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm",showmeans=True, ax=ax3)   
-    add_stat_annotation(ax3,data=tmp2,
-                    box_pairs=[(UTR3, UTR32)],
-                    test='t-test_welch', text_format='full', loc='outside', verbose=2)
-    tmp2 = pd.DataFrame({title_map_rna1+' UTR5':pd.Series(all_utr5),title_map_rna2+' UTR5':pd.Series(all_utr52),
-                         title_map_rna1+' CDS':pd.Series(all_cds),title_map_rna2+' CDS':pd.Series(all_cds2),
-                         title_map_rna1+' UTR3':pd.Series(all_utr3),title_map_rna2+' UTR3':pd.Series(all_utr32)})
-    #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
-    plt.tight_layout()
-    plt.savefig(res_path.replace('.png', '_non-log_T.png'))
-    plt.clf()
-    plt.close()
-    del tmp2
-    gc.collect()
-
-def main_plot(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME1, title_map_rna1, FILE_NAME2, title_map_rna2, gene, title_map_gene, rc, FILTER):
+def main_plot(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME1, title_map_rna1, FILE_NAME2, title_map_rna2, gene, title_map_gene, rc, FILTER, img_title):
     # preprocess for plot
     total_utr5 = [0.000001 for i in utr5_density1 if i == 0] + [i for i in utr5_density1 if i != 0]
     total_utr5 = [math.log10(i*1000000) for i in total_utr5]
@@ -535,7 +256,7 @@ def main_plot(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_den
     total_utr32 = [math.log10(i*1000000) for i in total_utr32]
     
     single_plot_method1(total_utr5, total_cds, total_utr3, total_utr52, total_cds2, total_utr32,FILE_NAME1, title_map_rna1, FILE_NAME2, title_map_rna2,
-                        gene, title_map_gene, rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2)
+                        gene, title_map_gene, rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, img_title)
 
 def main_filter_mRNA_g22(FILE_NAME, rc, gene_path, gene, title_map_gene, FILTER):
     #mRNA list

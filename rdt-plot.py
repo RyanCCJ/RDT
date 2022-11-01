@@ -1,7 +1,7 @@
 import argparse
 import os
 import sys
-from bioinfo.piRNA_project.code import tatk
+from bioinfo.piRNA_project.code import main
 
 __version__ = "version 1.0"
 
@@ -23,13 +23,13 @@ if __name__ == '__main__':
 
     # arguments
     parser = argparse.ArgumentParser(
-        description="This program is to plot the result for Transcriptome Analysis Toolkit (TATK).",
+        description="This program is to plot the result for RNA-seq Read Distribution Toolkit (RDT).",
     )
     parser.add_argument("-v", "--version",
                         action="version",
                         version="%(prog)s " + __version__)
     parser.add_argument("-i", "--input",
-                        help="inherit configuration in YAML format")
+                        help="read metadata in YAML format")
     parser.add_argument("-o", "--output",
                         help="output figure in png format")
     parser.add_argument("-L",
@@ -98,14 +98,14 @@ if __name__ == '__main__':
     #    data['img_format'] = "png"
 
 
-    print("\n===========  tatk-plot.py  ==============")
+    print("\n===========  rdt-plot.py  ==============")
     for arg in args:
         print("{}: {}".format(arg,args[arg]))
     print("==========================================")
 
 
     # merge configurations and input arguments
-    config_data = tatk.read_config(args['input'])
+    config_data = main.read_config(args['input'])
     config_data.update(data)
     data = config_data 
 
@@ -120,6 +120,8 @@ if __name__ == '__main__':
 
 
     # make directory to store image
+    if os.path.isdir("static"):
+        os.system("rm -r static")
     os.mkdir("static")
     os.mkdir("static/paper")
     for dirs in ['density_fig','meta_fig','codon_fig','fold_change_fig']:
@@ -130,7 +132,7 @@ if __name__ == '__main__':
 
     # plot figure
     print("\nStart ploting figure...")
-    tatk.plot(data)
+    main.plot(data)
     img_lst = collect_files("static")
     for img in img_lst:
         os.rename(img, args['output'])

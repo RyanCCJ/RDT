@@ -2,7 +2,7 @@ import argparse
 import os
 import sys
 import yaml
-from bioinfo.piRNA_project.code import tatk
+from bioinfo.piRNA_project.code import main
 
 __version__ = "version 1.0"
 
@@ -16,13 +16,13 @@ if __name__ == '__main__':
 
     # arguments
     parser = argparse.ArgumentParser(
-        description="This program is to build a reference for Transcriptome Analysis Toolkit (TATK).",
+        description="This program is to analyze datasets for RNA-seq Read Distribution Toolkit (RDT).",
     )
     parser.add_argument("-v", "--version",
                         action="version",
                         version="%(prog)s " + __version__)
     parser.add_argument("-o", "--output",
-                        help="output configuration in YAML format")
+                        help="output metadata in YAML format")
     parser.add_argument("-m", "--mode",
                         choices=["density", "metagene", "codon", "fold_change"],
                         help="choose a tool to analyze dataset")
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     # check if some necessary arguments are exist
     nec_args = args.copy()
-    for arg in ['D', 'data2']:
+    for arg in ['output', 'D', 'data2']:
         nec_args.pop(arg)
     program_exit = False
     for arg in nec_args:    
@@ -121,14 +121,14 @@ if __name__ == '__main__':
         data['READ_COUNT_TYPE'] = ['no_need_rc']
     
 
-    print("\n===========  tatk-build.py  ==============")
+    print("\n===========  rdt-analyze.py  ==============")
     for arg in args:
         print("{}: {}".format(arg,args[arg]))
     print("==========================================")
 
 
     # merge configurations and input arguments
-    config_data = tatk.read_config()
+    config_data = main.read_config()
     config_data.update(data)
     data = config_data 
     
@@ -156,8 +156,8 @@ if __name__ == '__main__':
 
 
     # analyze datasets
-    print("\nStart building reference...")
-    outputs = tatk.analyze(data)
+    print("\nStart analyze datasets...")
+    outputs = main.analyze(data)
     print("\nExport file:")
     for output in outputs:
         print(output)

@@ -18,7 +18,7 @@ def tool1_3(data):
     title_map_rna = data['title_map_rna']
 
     for ANALYZE_TYPE in data['ANALYZE_TYPE']:
-        print('===={}===='.format(ANALYZE_TYPE))
+        #print('===={}===='.format(ANALYZE_TYPE))
         
         if ANALYZE_TYPE == 'TARGET_SCORE':
             for rc in data['READ_COUNT_TYPE']:
@@ -28,7 +28,7 @@ def tool1_3(data):
                             gene_name1, gene_name2 = check_new(data, gene1, gene2)
                             utr5_density1, cds_density1, utr3_density1 = main_filter_mRNA_target_score(FILE_NAME, rc, gene_path, gene1, gene_name1, FILTER)
                             utr5_density2, cds_density2, utr3_density2 = main_filter_mRNA_target_score(FILE_NAME, rc, gene_path, gene2, gene_name2, FILTER)
-                            main_plot_target_score(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME, title_map_rna[FILE_NAME], gene1, title_map_gene[gene1], gene2, title_map_gene[gene2], rc, FILTER)
+                            main_plot_target_score(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME, title_map_rna[FILE_NAME], gene1, title_map_gene[gene1], gene2, title_map_gene[gene2], rc, FILTER, data['img_title'])
 
         elif ANALYZE_TYPE == 'PIRSCAN':
             for rc in data['READ_COUNT_TYPE']:
@@ -171,35 +171,35 @@ def main_filter_mRNA_target_score(FILE_NAME, rc, gene_path, gene, title_map_gene
     print(len(utr5_density), len(cds_density), len(utr3_density))
     return utr5_density, cds_density, utr3_density
 
-def main_plot_target_score(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME, title_map_rna, gene1, title_map_gene1, gene2, title_map_gene2, rc, FILTER):
+def main_plot_target_score(utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, FILE_NAME, title_map_rna, gene1, title_map_gene1, gene2, title_map_gene2, rc, FILTER, img_title):
     # preprocess for plot
     total_utr5 = [0.000001 for i in utr5_density1 if i == 0] + [i for i in utr5_density1 if i != 0]
-    total_utr5 = [math.log10(i*1000000) for i in total_utr5]
+    total_utr5 = [math.log10(i*1000) for i in total_utr5]
 
     total_cds = [0.000001 for i in cds_density1 if i == 0] + [i for i in cds_density1 if i != 0]
-    total_cds = [math.log10(i*1000000) for i in total_cds]
+    total_cds = [math.log10(i*1000) for i in total_cds]
 
     total_utr3 = [0.000001 for i in utr3_density1 if i == 0] + [i for i in utr3_density1 if i != 0]
-    total_utr3 = [math.log10(i*1000000) for i in total_utr3]
+    total_utr3 = [math.log10(i*1000) for i in total_utr3]
 
     total_utr52 = [0.000001 for i in utr5_density2 if i == 0] + [i for i in utr5_density2 if i != 0]
-    total_utr52 = [math.log10(i*1000000) for i in total_utr52]
+    total_utr52 = [math.log10(i*1000) for i in total_utr52]
 
     total_cds2 = [0.000001 for i in cds_density2 if i == 0] + [i for i in cds_density2 if i != 0]
-    total_cds2 = [math.log10(i*1000000) for i in total_cds2]
+    total_cds2 = [math.log10(i*1000) for i in total_cds2]
 
     total_utr32 = [0.000001 for i in utr3_density2 if i == 0] + [i for i in utr3_density2 if i != 0]
-    total_utr32 = [math.log10(i*1000000) for i in total_utr32]
+    total_utr32 = [math.log10(i*1000) for i in total_utr32]
     
     single_plot_target_score(total_utr5, total_cds, total_utr3, total_utr52, total_cds2, total_utr32, FILE_NAME, title_map_rna, gene1, title_map_gene1, gene2, title_map_gene2,
-                             rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2)
+                             rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, img_title)
     
 def single_plot_target_score(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, all_utr32, FILE_NAME, title_map_rna, gene1, title_map_gene1, gene2, title_map_gene2,
-                             rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2):
+                             rc, FILTER, utr5_density1, cds_density1, utr3_density1, utr5_density2, cds_density2, utr3_density2, img_title):
     #res_path = os.path.abspath(__file__+ '/../../../target_score_'+rc+'_output/density_fig/COMPARE_'+FILE_NAME+'_G'+str(gene1)+'_'+str(gene2)+'_L'+str(FILTER)+'.png')
     res_path = os.path.abspath(__file__+ '/../../../../../static/paper/density_fig/compare_list/density_COMPARE_'+FILE_NAME+'_G'+str(gene1)+'_'+str(gene2)+'_L'+str(FILTER)+rc+'.png')
-    print('ploting group:',FILE_NAME,rc,FILTER,str(gene1),str(gene2))
-    
+    #print('ploting group:',FILE_NAME,rc,FILTER,str(gene1),str(gene2))
+    '''
     #### Log ####
     # U-test
     fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
@@ -382,35 +382,20 @@ def single_plot_target_score(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, a
     plt.close()
     del tmp2
     gc.collect()
-    
+    '''
     #### non-Log ####
     # U-test
     fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
 
-    ax1.set_title(title_map_rna+'_UTR5\n'+title_map_gene1+' N='+str(len(all_utr5))+'\n'+
-                 title_map_gene2+' N='+str(len(all_utr52))+'\n\n\n')#+title_map_gene[str(gene)]+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     ax1.tick_params(axis='y', labelsize=16)
     
-    mean_5 = round(np.mean(utr5_density1*1000000),3)
-    median_5 = round(np.median(utr5_density1*1000000),3)
-    UTR5 = '{}\navg:{}\nmedian:{}'.format(title_map_gene1, mean_5, median_5)
-    mean_52 = round(np.mean(utr5_density2*1000000),3)
-    median_52 = round(np.median(utr5_density2*1000000),3)
-    UTR52 = '{}\navg:{}\nmedian:{}'.format(title_map_gene2, mean_52, median_52)
-    
-    mean_cds = round(np.mean(cds_density1*1000000),3)
-    median_cds = round(np.median(cds_density1*1000000),3)
-    CDS = '{}\navg:{}\nmedian:{}'.format(title_map_gene1, mean_cds, median_cds)
-    mean_cds2 = round(np.mean(cds_density2*1000000),3)
-    median_cds2 = round(np.median(cds_density2*1000000),3)
-    CDS2 = '{}\navg:{}\nmedian:{}'.format(title_map_gene2, mean_cds2, median_cds2)
-    
-    mean_3 = round(np.mean(utr3_density1*1000000),3)
-    median_3 = round(np.median(utr3_density1*1000000),3)
-    UTR3 = '{}\navg:{}\nmedian:{}'.format(title_map_gene1, mean_3, median_3)
-    mean_32 = round(np.mean(utr3_density2*1000000),3)
-    median_32 = round(np.median(utr3_density2*1000000),3)
-    UTR32 = '{}\navg:{}\nmedian:{}'.format(title_map_gene2, mean_32, median_32)
+    UTR5 = title_map_gene1
+    UTR52 = title_map_gene2
+    CDS = title_map_gene1
+    CDS2 = title_map_gene2
+    UTR3 = title_map_gene1
+    UTR32 = title_map_gene2
+
     utr5_75 = np.percentile(utr5_density1, 75)
     utr5_25 = np.percentile(utr5_density1, 25)
     utr5_max = utr5_75 + 1.6*(utr5_75 - utr5_25)
@@ -431,49 +416,49 @@ def single_plot_target_score(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, a
     utr3_75 = np.percentile(utr3_density2, 75)
     utr3_25 = np.percentile(utr3_density2, 25)
     utr32_max = utr3_75 + 1.6*(utr3_75 - utr3_25)
-    plt.ylim(0, 1000000*max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
-    tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density1*1000000),UTR52:pd.Series(utr5_density2*1000000)})
+    
+    plt.ylim(0, 1000*max([utr5_max, utr52_max, cds_max, cds2_max, utr3_max, utr32_max]))
+    tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density1*1000),UTR52:pd.Series(utr5_density2*1000)})
     my_pal = {UTR5:'#FFA07A', UTR52:'#98F898'}
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal,showmeans=True, ax=ax1)
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal, ax=ax1)
     #ax = sns.violinplot(data=tmp2, scale="count", split=True, inner="quartile", palette="coolwarm")
     add_stat_annotation(ax1,data=tmp2,
                     box_pairs=[(UTR5, UTR52)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0)
     if rc == 'need_rc':
-        ax1.set_ylabel('read counts*M/nt',fontsize=22) #log10(read counts*M/nt)
+        ax1.set_ylabel('reads x $\mathregular{10^3}$ / nt',fontsize=22) #log10(read counts*M/nt)
     else:
-        ax1.set_ylabel('sites counts*M/nt',fontsize=22)
+        ax1.set_ylabel('sites x $\mathregular{10^3}$ / nt',fontsize=22)
 
-    ax2.set_title(title_map_rna+'_CDS\n'+title_map_gene1+' N='+str(len(all_cds))+'\n'+
-                 title_map_gene2+' N='+str(len(all_cds2))+'\n\n\n')#+title_map_gene[str(gene)]+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     
-    tmp2 = pd.DataFrame({CDS:pd.Series(cds_density1*1000000),CDS2:pd.Series(cds_density2*1000000)})
+    tmp2 = pd.DataFrame({CDS:pd.Series(cds_density1*1000),CDS2:pd.Series(cds_density2*1000)})
     my_pal = {CDS:'#FFA07A', CDS2:'#98F898'}
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal,showmeans=True, ax=ax2)    
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal, ax=ax2)    
     add_stat_annotation(ax2,data=tmp2,
                     box_pairs=[(CDS, CDS2)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0)
     
-    ax3.set_title(title_map_rna+'_UTR3\n'+title_map_gene1+' N='+str(len(all_utr3))+'\n'+
-                 title_map_gene2+' N='+str(len(all_utr32))+'\n\n\n')#+title_map_gene[str(gene)]+'\n #UTR5='+str(len(all_utr5))+' #CDS='+str(len(all_cds))+' #UTR3='+str(len(all_utr3)), fontsize=20) #Algorithm_name+'_'+
     
-    tmp2 = pd.DataFrame({UTR3:pd.Series(utr3_density1*1000000),UTR32:pd.Series(utr3_density2*1000000)})
+    tmp2 = pd.DataFrame({UTR3:pd.Series(utr3_density1*1000),UTR32:pd.Series(utr3_density2*1000)})
     my_pal = {UTR3:'#FFA07A', UTR32:'#98F898'}
-    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal,showmeans=True, ax=ax3)   
+    sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette=my_pal, ax=ax3)   
     add_stat_annotation(ax3,data=tmp2,
                     box_pairs=[(UTR3, UTR32)],
-                    test='Mann-Whitney', text_format='full', loc='outside', verbose=2)
-    tmp2 = pd.DataFrame({title_map_gene1+' UTR5':pd.Series(all_utr5),title_map_gene2+' UTR5':pd.Series(all_utr52),
-                        title_map_gene1+' CDS':pd.Series(all_cds),title_map_gene2+' CDS':pd.Series(all_cds2),
-                        title_map_gene1+' UTR3':pd.Series(all_utr3),title_map_gene2+' UTR3':pd.Series(all_utr32)})
+                    test='Mann-Whitney', text_format='full', loc='outside', verbose=0)
+    
+    ax2.set_title(img_title+'\n\n', fontsize=25)
+    #tmp2 = pd.DataFrame({title_map_gene1+' UTR5':pd.Series(all_utr5),title_map_gene2+' UTR5':pd.Series(all_utr52),
+    #                    title_map_gene1+' CDS':pd.Series(all_cds),title_map_gene2+' CDS':pd.Series(all_cds2),
+    #                    title_map_gene1+' UTR3':pd.Series(all_utr3),title_map_gene2+' UTR3':pd.Series(all_utr32)})
     #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
+
     plt.tight_layout()
     plt.savefig(res_path.replace('.png', '_non-log_U.png'))
     plt.clf()
     plt.close()
-    del tmp2
+    #del tmp2
     gc.collect()
-    
+    '''
     # T-test
     fig ,(ax1,ax2,ax3) = plt.subplots(1,3, sharey=True, figsize=(14,8),dpi=200)
 
@@ -563,6 +548,7 @@ def single_plot_target_score(all_utr5, all_cds, all_utr3, all_utr52, all_cds2, a
     plt.close()
     del tmp2
     gc.collect()
+    '''
 
 def main_filter_mRNA_pirscan(FILE_NAME, rc, gene_path, gene, title_map_gene, FILTER):
     #mRNA list
