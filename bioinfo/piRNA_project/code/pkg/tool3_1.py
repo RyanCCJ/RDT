@@ -20,8 +20,9 @@ def tool3_1(data):
                 for FILE_NAME in data['TARGET_SCORE_FILE']:
                     for rc in data['READ_COUNT_TYPE']:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                            'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #    'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
 
                         all_pos_START_record = {}
@@ -83,8 +84,9 @@ def tool3_1(data):
                 for FILE_NAME in data['TARGET_SCORE_FILE']:
                     for rc in data['READ_COUNT_TYPE']:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_usetRNA_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                            'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #    'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
 
                         all_pos_START_record = {}

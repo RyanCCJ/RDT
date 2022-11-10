@@ -18,8 +18,9 @@ def tool1_1(data):
                     # TARGET SCORE SITE
                     if data['DATA'] == 1:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                                    'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #            'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
                         all_mRNA_result = tool1_main(df, all_mRNA)
                         all_mRNA_result.to_csv(os.path.abspath(__file__+'/../../../target_score_'+rc+'_output/'+FILE_NAME+'_all_mRNA_tool1.csv'),index=None)
@@ -28,8 +29,9 @@ def tool1_1(data):
                     # TARGET SCORE SITE CROSS CONDITION 
                     if data['DATA'] == 2:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_usetRNA_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                                    'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #            'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
                         all_mRNA_result = tool1_main(df, all_mRNA)
                         all_mRNA_result.to_csv(os.path.abspath(__file__+'/../../../usetRNA_target_score_'+rc+'_output/'+FILE_NAME+'_all_mRNA_tool1.csv'),index=None)

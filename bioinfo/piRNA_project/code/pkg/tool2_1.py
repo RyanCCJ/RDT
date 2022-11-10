@@ -21,8 +21,9 @@ def tool2_1(data):
                     # target score
                     if data['DATA'] == 1:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                        'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['middle_pos'] = df['target_score_pos'].apply(lambda x: int((int(x.split('-')[0])+int(x.split('-')[1]))/2))
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
                         df_withid = pd.merge(df, all_mRNA,left_on='transcript_name', right_on='Gene name',how='left')
@@ -60,8 +61,9 @@ def tool2_1(data):
                     # CROSS CONDITION 
                     if data['DATA'] == 2:
                         df = pd.read_csv(os.path.abspath(__file__+'/../../../../data/CLASH/target_score_'+FILE_NAME+'_'+rc+'norm_usetRNA_2step.csv'))
-                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
-                        'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
+                        df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc']]
+                        #df = df[['target_score_pos','targeting_score','regulator_name','transcript_name','norm_rc','xgu_inseed', 'gu_inseed', 'xgu_innon-seed',
+                        #'gu_innon-seed', 'totalmismatch', 'xGU_mispos', 'GU_mispos']]
                         df['middle_pos'] = df['target_score_pos'].apply(lambda x: int((int(x.split('-')[0])+int(x.split('-')[1]))/2))
                         df['site_len'] = df['target_score_pos'].apply(lambda x: int(abs((int(x.split('-')[0])-int(x.split('-')[1])))))
                         df_withid = pd.merge(df, all_mRNA,left_on='transcript_name', right_on='Gene name',how='left')
