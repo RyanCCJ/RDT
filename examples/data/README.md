@@ -1,14 +1,14 @@
 ## data1
-RNAup_AGO3_no_need_rcnorm_2step.csv
+AGO3(SRR3882949), RNAup, site level
 
 ## data2
-stringent_pirscan_withup.csv
+CLASH WT1(SRR6512652), pirScan, site level
 
 ## data3
-WT_WAGOIP_norm_1step.csv
+WAGOIP WT(SRR8482951), 22G, read count level
 
 ## data4
-WT_WAGOIP_EGL17M0_usemiRNA_norm_1step.csv
+WAGOIP WT(SRR8482951), normalized by miRNA read counts, 22G, read count level
 
 ## data5
-PRG_MUT_WAGOIP_EGL17M0_usemiRNA_norm_1step.csv
+prg mutant WAGOIP WT(SRR8482949), normalized by miRNA read counts, 22G, read count level
