@@ -29,9 +29,6 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--type",
                         choices=["target_score", "RNAup", "pirScan", "22G"],
                         help="choose a type of the tool")
-    parser.add_argument("-D",
-                        action="store_true",
-                        help="compare two datasets")
     parser.add_argument("--data",
                         help="An comma-separated file in specific format.")
     parser.add_argument("--data2",
@@ -45,7 +42,7 @@ if __name__ == '__main__':
 
     # check if some necessary arguments are exist
     nec_args = args.copy()
-    for arg in ['output', 'D', 'data2']:
+    for arg in ['output', 'data2']:
         nec_args.pop(arg)
     program_exit = False
     for arg in nec_args:    
@@ -85,11 +82,8 @@ if __name__ == '__main__':
     
 
     # data
-    if args['D']:
+    if args['data2'] != None:
         data['DATA'] = 2
-        if args['data2'] == None:
-            print('[Error] Argument "--data2" should not left blank while "-D" turns on.')
-            sys.exit()
         if (data['ANALYZE_TYPE'] == ['RNAUP']) or (data['ANALYZE_TYPE'] == ['PIRSCAN']):
             print('[Error] Compare two datasets (-D) only when type is "target_score" or "22G".')
             sys.exit()
