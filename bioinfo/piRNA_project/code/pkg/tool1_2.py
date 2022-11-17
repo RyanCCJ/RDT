@@ -199,6 +199,8 @@ def single_plot_target_score(all_utr5, all_cds, all_utr3, FILE_NAME, title_map_r
     tmp2 = pd.DataFrame({UTR5:pd.Series(utr5_density*1000),CDS:pd.Series(cds_density*1000),UTR3:pd.Series(utr3_density*1000)})
     #tmp2.to_csv(res_path.replace('png', 'csv'), index=False)
     ax = sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm")
+    #ax.set_yticks([0,5,10,15,20,25,30,35])
+    #ax.set_yticks([0,10,20,30,40,50,60,70])
     if rc == 'need_rc':
         ax.set_ylabel('read counts x $\mathregular{10^3}$ / nt',fontsize=22)
     else:
@@ -471,7 +473,7 @@ def main_plot_g22(all_density, utr5_density, cds_density, utr3_density, FILE_NAM
     total_utr3 = [0.000001 for i in utr3_density if i == 0] + [i for i in utr3_density if i != 0]
     total_utr3 = [math.log10(i*1000000) for i in total_utr3]
 
-    single_plot_g22(total_all, total_utr5, total_cds, total_utr3, FILE_NAME, title_map_rna, gene, title_map_gene, rc, FILTER, all_density, utr5_density, cds_density, utr3_density, img_title, img_title)
+    single_plot_g22(total_all, total_utr5, total_cds, total_utr3, FILE_NAME, title_map_rna, gene, title_map_gene, rc, FILTER, all_density, utr5_density, cds_density, utr3_density, img_title)
 
 def single_plot_g22_new(all_region, FILE_NAME, title_map_rna, gene, title_map_gene, rc, FILTER, all_density, img_title):
     res_path = os.path.abspath(__file__+'/../../../../../static/paper/density_fig/single/density_ALL_'+FILE_NAME+'_G'+str(gene)+'_L'+str(FILTER)+'.png')
@@ -704,7 +706,7 @@ def single_plot_g22(all_region, all_utr5, all_cds, all_utr3, FILE_NAME, title_ma
     plt.yticks(fontsize = 22)
     ax = sns.boxplot(data=tmp2, showfliers = False, width=0.3, palette="coolwarm")
     if rc == 'need_rc':
-        ax.set_ylabel('read counts x $\mathregular{10^3}$ / nt',fontsize=22)
+        ax.set_ylabel('reads x $\mathregular{10^3}$ / nt',fontsize=22)
     else:
         ax.set_ylabel('sites x $\mathregular{10^3}$ / nt',fontsize=22)
     try:
